@@ -1,0 +1,54 @@
+package granssnitt;
+
+import register.Medlemmar;
+import java.io.IOException;
+
+public class MedlemsApp {
+
+    public static void main(String[] args) {
+        // Skapa ett Medlemmar-objekt
+        Medlemmar medlemsRegister = new Medlemmar();
+
+        MedlemsMeny meny = new MedlemsMeny();
+        
+        meny.setMedlemsRegister(medlemsRegister);// kopplar medlemsregistret till menyn
+
+        // Nedanstående block läser in en medlemsdata från en fil.
+        try {
+            medlemsRegister.readFromFile(Properties.FILNAMN);
+        } catch (IOException ex) {
+            System.out.println("Det uppstod problem vid läsning av filen.");
+        }
+
+        int menyVal = 0;
+        while (menyVal != 4) {
+            menyVal = meny.visaMeny();
+            switch (menyVal) {
+                case 1:
+                    // anropa visa medlemmar
+                    meny.visaMedlemmar();
+                    break;
+
+                case 2:
+                    // anropa lagg till medlem
+                    meny.laggTillMedlem();
+                    break;
+
+                case 3:
+                    // anropa ta bort medlem
+                    meny.taBortMedlem();
+                    break;
+                case 4:
+                    //Anropa avsluta
+                    meny.avsluta();
+                    //System.exit(0);
+                    break;
+                default:
+                    System.out.println("Ogiltigt val. Försök igen.");
+
+            }
+
+        }
+
+    }
+}
